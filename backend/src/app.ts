@@ -48,6 +48,7 @@ app.use("*", async (c, next) => {
     "/css/",
     "/js/",
     "/favicon.ico",
+    "/health",  
   ];
 
   // Special handling for root path - check auth and redirect accordingly
@@ -89,12 +90,12 @@ async function initializeDirectories() {
 }
 
 // Serve static files (must be before other routes)
-app.use("/public/*", serveStatic({ root: "./" }));
-app.use("/css/*", serveStatic({ root: "./public" }));
-app.use("/js/*", serveStatic({ root: "./public" }));
+// app.use("/public/*", serveStatic({ root: "./" }));
+// app.use("/css/*", serveStatic({ root: "./public" }));
+// app.use("/js/*", serveStatic({ root: "./public" }));
 
 // Login page route (public)
-app.get("/login", serveStatic({ path: "./public/login.html" }));
+// app.get("/login", serveStatic({ path: "./public/login.html" }));
 
 // Routes
 app.route("/", authRoutes); // Auth routes (login, register, logout)
