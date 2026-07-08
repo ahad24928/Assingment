@@ -1,0 +1,141 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f5f7fb;
+  font-family: Inter, "Segoe UI", sans-serif;
+}
+
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.register-card {
+  width: 430px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.register-logo {
+  width: 64px;
+  height: 64px;
+  margin: auto auto 20px;
+
+  background: #2563eb;
+  color: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 16px;
+  font-size: 28px;
+}
+
+.register-card h1 {
+  text-align: center;
+  color: #111827;
+  font-size: 30px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #6b7280;
+  margin: 8px 0 35px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.input-box {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  transition: .2s;
+}
+
+.input-box input {
+  width: 100%;
+  height: 48px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+
+  padding: 0 16px 0 46px;
+
+  font-size: 15px;
+  transition: .2s;
+}
+
+.input-box input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+.input-box:focus-within .input-icon {
+  color: #2563eb;
+}
+
+.register-btn {
+  width: 100%;
+  height: 48px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #2563eb;
+  color: white;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: .25s;
+
+  margin-top: 10px;
+}
+
+.register-btn:hover {
+  background: #1d4ed8;
+}
+
+.register-footer {
+  text-align: center;
+  margin-top: 25px;
+  color: #6b7280;
+}
+
+.register-footer a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-footer a:hover {
+  text-decoration: underline;
+}

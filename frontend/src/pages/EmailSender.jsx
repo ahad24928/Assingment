@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import ReactQuill from "react-quill-new";
-import "react-quill-new/dist/quill.snow.css";
 import api from "../api/api";
+import FileUploads from "./FileUploads";
+import EmailContent from "./EmailContent";
 
 export default function EmailSender() {
   const [configs, setConfigs] = useState([]);
@@ -34,8 +34,13 @@ export default function EmailSender() {
 
   const [provider, setProvider] = useState(null);
 
+  // --- Scheduled jobs, shared with FileUploads ---
+  const [jobs, setJobs] = useState([]);
+  const [jobsLoading, setJobsLoading] = useState(false);
+
   useEffect(() => {
     loadConfigs();
+    loadJobs();
   }, []);
 
   const loadConfigs = async () => {
@@ -43,8 +48,28 @@ export default function EmailSender() {
 
     setConfigs(res.data.userConfigs);
 
-    if (res.data.userConfigs.length)
-      setConfigId(res.data.userConfigs[0].id);
+    if (res.data.userConfigs.length) setConfigId(res.data.userConfigs[0].id);
+  };
+
+  const loadJobs = async () => {
+    setJobsLoading(true);
+    try {
+      const res = await api.get("/scheduled-jobs");
+      setJobs(res.data.data || []);
+    } catch (err) {
+      console.error("Failed to load scheduled jobs", err);
+    } finally {
+      setJobsLoading(false);
+    }
+  };
+
+  const cancelJob = async (id) => {
+    try {
+      await api.delete(`/scheduled-jobs/${id}`);
+      loadJobs();
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to cancel job");
+    }
   };
 
   const parseExcel = async (file) => {
@@ -62,6 +87,7 @@ export default function EmailSender() {
     if (!configs.length) return;
 
     const config = configs.find((c) => c.id === configId);
+    if (!config) return;
 
     const fd = new FormData();
 
@@ -74,10 +100,20 @@ export default function EmailSender() {
 
   useEffect(() => {
     detectProvider();
-  }, [configId]);
+  }, [configId, configs]);
 
   const submit = async (e) => {
     e.preventDefault();
+
+    if (!excelFile) {
+      alert("Please upload an Excel file first.");
+      return;
+    }
+
+    if (scheduleEmail && !scheduledTime) {
+      alert("Please pick a scheduled time.");
+      return;
+    }
 
     const form = new FormData();
 
@@ -87,8 +123,7 @@ export default function EmailSender() {
 
     form.append("excelFile", excelFile);
 
-    if (htmlFile)
-      form.append("htmlTemplate", htmlFile);
+    if (htmlFile) form.append("htmlTemplate", htmlFile);
 
     form.append("delay", delay);
 
@@ -107,16 +142,17 @@ export default function EmailSender() {
       form.append("scheduledTime", new Date(scheduledTime).toISOString());
     }
 
-    if (notifyEmail)
-      form.append("notifyEmail", notifyEmail);
+    if (notifyEmail) form.append("notifyEmail", notifyEmail);
 
-    if (notifyBrowser)
-      form.append("notifyBrowser", "on");
+    if (notifyBrowser) form.append("notifyBrowser", "on");
 
     try {
       const res = await api.post("/send", form);
 
       alert(res.data.message);
+
+      // Refresh so the new/updated job shows immediately
+      loadJobs();
     } catch (err) {
       alert(err.response?.data?.message || "Failed");
     }
@@ -124,251 +160,57 @@ export default function EmailSender() {
 
   return (
     <div>
-
-      <h2>Send Bulk Email</h2>
-
       <form onSubmit={submit}>
-
-        <h3>SMTP Configuration</h3>
-
-        <select
-          value={configId}
-          onChange={(e)=>setConfigId(e.target.value)}
-        >
-          {configs.map(c=>(
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-
-        <hr/>
-
-        <h3>Subject</h3>
-
-        <input
-          style={{width:"100%"}}
-          value={subject}
-          onChange={(e)=>setSubject(e.target.value)}
+        <FileUploads
+          configs={configs}
+          configId={configId}
+          setConfigId={setConfigId}
+          excelFile={excelFile}
+          setExcelFile={setExcelFile}
+          parseExcel={parseExcel}
+          htmlFile={htmlFile}
+          setHtmlFile={setHtmlFile}
+          preview={preview}
+          total={total}
+          start={start}
+          setStart={setStart}
+          count={count}
+          setCount={setCount}
+          delay={delay}
+          setDelay={setDelay}
+          useBatch={useBatch}
+          setUseBatch={setUseBatch}
+          batchSize={batchSize}
+          setBatchSize={setBatchSize}
+          batchDelay={batchDelay}
+          setBatchDelay={setBatchDelay}
+          emailDelay={emailDelay}
+          setEmailDelay={setEmailDelay}
+          scheduleEmail={scheduleEmail}
+          setScheduleEmail={setScheduleEmail}
+          scheduledTime={scheduledTime}
+          setScheduledTime={setScheduledTime}
+          notifyEmail={notifyEmail}
+          setNotifyEmail={setNotifyEmail}
+          notifyBrowser={notifyBrowser}
+          setNotifyBrowser={setNotifyBrowser}
+          provider={provider}
+          scheduledJobs={jobs}
+          jobsLoading={jobsLoading}
+          onRefreshJobs={loadJobs}
+          onCancelJob={cancelJob}
         />
 
-        <hr/>
-
-        <h3>Email Content</h3>
-
-        <ReactQuill
-          theme="snow"
-          value={htmlContent}
-          onChange={setHtmlContent}
-        />
-
-        <br/>
-
-        <input
-          type="file"
-          accept=".html"
-          onChange={(e)=>setHtmlFile(e.target.files[0])}
-        />
-
-        <hr/>
-
-        <h3>Excel File</h3>
-        <div style={{ marginTop: "10px" }}>
-  <a href="/sample.xlsx" download>
-    <button type="button">
-      📥 Download Sample Excel
-    </button>
-  </a>
-</div>
-
-        <input
-          type="file"
-          accept=".xlsx,.xls"
-          onChange={async(e)=>{
-            const file=e.target.files[0];
-            setExcelFile(file);
-            await parseExcel(file);
-          }}
-        />
-
-        <h3>Total Contacts : {total}</h3>
-
-        <table border="1">
-
-          <thead>
-
-            <tr>
-
-              <th>Email</th>
-              <th>First</th>
-              <th>Last</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-          {preview.map((c,i)=>(
-            <tr key={i}>
-              <td>{c.Email}</td>
-              <td>{c.FirstName}</td>
-              <td>{c.LastName}</td>
-            </tr>
-          ))}
-
-          </tbody>
-
-        </table>
-
-        <hr/>
-
-        <h3>Email Range</h3>
-
-        <input
-          type="number"
-          value={start}
-          onChange={(e)=>setStart(e.target.value)}
-        />
-
-        <input
-          type="number"
-          value={count}
-          onChange={(e)=>setCount(e.target.value)}
-        />
-
-        <hr/>
-
-        <h3>Delay</h3>
-
-        <input
-          type="number"
-          value={delay}
-          onChange={(e)=>setDelay(e.target.value)}
-        />
-
-        <hr/>
-
-        <label>
-
-          <input
-            type="checkbox"
-            checked={useBatch}
-            onChange={(e)=>setUseBatch(e.target.checked)}
-          />
-
-          Use Batch Mode
-
-        </label>
-
-        {useBatch && (
-
-          <div>
-
-            <p>Batch Size</p>
-
-            <input
-              type="number"
-              value={batchSize}
-              onChange={(e)=>setBatchSize(e.target.value)}
-            />
-
-            <p>Email Delay</p>
-
-            <input
-              type="number"
-              value={emailDelay}
-              onChange={(e)=>setEmailDelay(e.target.value)}
-            />
-
-            <p>Batch Delay</p>
-
-            <input
-              type="number"
-              value={batchDelay}
-              onChange={(e)=>setBatchDelay(e.target.value)}
-            />
-
-          </div>
-
-        )}
-
-        <hr/>
-
-        <label>
-
-          <input
-            type="checkbox"
-            checked={scheduleEmail}
-            onChange={(e)=>setScheduleEmail(e.target.checked)}
-          />
-
-          Schedule Email
-
-        </label>
-
-        {scheduleEmail && (
-
-          <input
-            type="datetime-local"
-            value={scheduledTime}
-            onChange={(e)=>setScheduledTime(e.target.value)}
-          />
-
-        )}
-
-        <hr/>
-
-        <h3>Notification</h3>
-
-        <input
-          placeholder="Notification Email"
-          value={notifyEmail}
-          onChange={(e)=>setNotifyEmail(e.target.value)}
-        />
-
-        <br/><br/>
-
-        <label>
-
-          <input
-            type="checkbox"
-            checked={notifyBrowser}
-            onChange={(e)=>setNotifyBrowser(e.target.checked)}
-          />
-
-          Browser Notification
-
-        </label>
-
-        <hr/>
-
-        {provider && (
-
-          <div>
-
-            <h3>Provider Information</h3>
-
-            <p>Provider : {provider.provider}</p>
-
-            <p>Daily Limit : {provider.dailyLimit}</p>
-
-            <p>Recommended Batch : {provider.recommendedBatchSize}</p>
-
-            <p>Recommended Delay : {provider.recommendedDelay}</p>
-
-          </div>
-
-        )}
-
-        <button type="submit">
-
-          Send Emails
-
-        </button>
-
+       <EmailContent
+  subject={subject}
+  setSubject={setSubject}
+  htmlContent={htmlContent}
+  setHtmlContent={setHtmlContent}
+  htmlFile={htmlFile}
+  setHtmlFile={setHtmlFile}
+  scheduleEmail={scheduleEmail}
+/>
       </form>
-
     </div>
   );
 }

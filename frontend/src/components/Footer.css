@@ -1,0 +1,136 @@
+.ft-footer{
+    margin-top:40px;
+    background:#1f2937;
+    border-top:1px solid #111827;
+    color:#fff;
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+.ft-inner{
+    max-width:1400px;
+    margin:auto;
+    padding:26px 24px;
+}
+
+.ft-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+.ft-brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.ft-brand-icon{
+    width:42px;
+    height:42px;
+    background:#2563eb;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    flex-shrink:0;
+}
+
+.ft-title{
+    font-size:17px;
+    font-weight:700;
+}
+
+.ft-subtitle{
+    color:#9ca3af;
+    font-size:13px;
+    margin-top:3px;
+}
+
+.ft-links{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+}
+
+.ft-links a{
+    color:#cbd5e1;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+    transition:.2s;
+}
+
+.ft-links a:hover{
+    color:#60a5fa;
+}
+
+.ft-divider{
+    height:1px;
+    background:#374151;
+    margin:22px 0;
+}
+
+.ft-bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.ft-status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#d1fae5;
+    font-size:13px;
+    font-weight:600;
+}
+
+.ft-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 10px #22c55e;
+}
+
+.ft-copy{
+    color:#9ca3af;
+    font-size:13px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.ft-heart{
+    color:#ef4444;
+    display:flex;
+    align-items:center;
+}
+
+.ft-version{
+    background:#374151;
+    color:#e5e7eb;
+    padding:5px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:600;
+}
+
+@media(max-width:768px){
+
+    .ft-top,
+    .ft-bottom{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .ft-links{
+        gap:14px;
+    }
+
+}

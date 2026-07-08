@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 import api from "../api/api";
+import "./Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -25,32 +27,58 @@ export default function Login() {
   };
 
   return (
-    <div style={{ width: "350px", margin: "80px auto" }}>
-      <h2>Login</h2>
+    <div className="login-page">
+      <div className="login-card">
+        <div className="login-logo">
+          ✉
+        </div>
 
-      <form onSubmit={submit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{ width: "100%", marginBottom: 10 }}
-        />
+        <h1>Bulk Email Sender</h1>
+        <p className="subtitle">Sign in to your account</p>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ width: "100%", marginBottom: 10 }}
-        />
+        <form onSubmit={submit}>
+          <div className="form-group">
+            <label>Email Address</label>
 
-        <button type="submit">Login</button>
-      </form>
+            <div className="input-box">
+              <FaEnvelope className="input-icon" />
 
-      <p>
-        Don't have an account? <Link to="/register">Register</Link>
-      </p>
+              <input
+                type="email"
+                placeholder="name@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+
+            <div className="input-box">
+              <FaLock className="input-icon" />
+
+              <input
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit" className="login-btn">
+            Sign In
+          </button>
+        </form>
+
+        <div className="login-footer">
+          Don't have an account?
+          <Link to="/register"> Create Account</Link>
+        </div>
+      </div>
     </div>
   );
 }

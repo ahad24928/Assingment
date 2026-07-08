@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
 import { useNavigate } from "react-router-dom";
+
 import SMTPConfig from "./SMTPConfig";
 import EmailSender from "./EmailSender";
-import ScheduledJobs from "./ScheduledJobs";
+import Welcome from "./Welcome";
+import Layout from "../components/Layout";
+import Footer from "../components/Footer";
+// import Navbar from "../components/Navbar";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -22,42 +26,34 @@ export default function Dashboard() {
     }
   };
 
-  const logout = async () => {
-    await api.post("/auth/logout");
-    navigate("/login");
-  };
-
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Bulk Email Sender</h1>
+    <Layout>
+      <div className="container-fluid py-4">
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "flex-start",
+            gap: 20,
+          }}
+        >
+          <div style={{ flex: "3 1 520px", minWidth: 0 }}>
+            <SMTPConfig />
+          </div>
 
-      <h3>Welcome {user?.name}</h3>
+          <div style={{ flex: "1 1 280px", minWidth: 0 }}>
+            <Welcome user={user} />
+          </div>
+        </div>
 
-      <p>{user?.email}</p>
+        <div className="row mt-4">
+          <div className="col-12">
+            <EmailSender />
+          </div>
+        </div>
+      </div>
 
-      <hr />
-
-      <hr />
-
-      <button onClick={logout}>Logout</button>
-
-
-        <hr /> 
-
-        <SMTPConfig />
-
-        <hr /> 
-
-
-        <EmailSender />
-
-        <hr />
-
-<ScheduledJobs />
-
-        
-        
-
-    </div>
+       <Footer />
+    </Layout>
   );
 }

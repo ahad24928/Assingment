@@ -1,0 +1,246 @@
+.nb-nav {
+  background: #1f2937;
+  border-bottom: 1px solid #111827;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 100;
+  box-sizing: border-box;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.nb-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* ---------- Brand ---------- */
+.nb-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+}
+
+.nb-brand-mark {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 7px;
+  font-size: 15px;
+}
+
+.nb-brand-name {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* ---------- Links ---------- */
+.nb-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nb-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #cbd5e1;
+  text-decoration: none;
+  padding: 8px 13px;
+  border-radius: 7px;
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nb-link:hover {
+  background: #374151;
+  color: #fff;
+}
+
+.nb-link-active {
+  background: #2563eb;
+  color: #fff;
+}
+
+.nb-link-active:hover {
+  background: #2563eb;
+}
+
+/* ---------- User dropdown ---------- */
+.nb-user-wrap {
+  position: relative;
+  margin-left: 8px;
+}
+
+.nb-user-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #374151;
+  border: 1px solid transparent;
+  color: #fff;
+  padding: 6px 12px 6px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.nb-user-btn:hover,
+.nb-user-btn-open {
+  background: #4b5563;
+}
+
+.nb-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.nb-avatar-lg {
+  width: 38px;
+  height: 38px;
+  font-size: 13px;
+}
+
+.nb-user-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #f1f5f9;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nb-chevron {
+  display: flex;
+  color: #9ca3af;
+  transition: transform 0.15s ease;
+}
+
+.nb-chevron-open {
+  transform: rotate(180deg);
+}
+
+.nb-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 240px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  z-index: 200;
+}
+
+.nb-dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+}
+
+.nb-dropdown-user {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.nb-dropdown-user strong {
+  font-size: 13.5px;
+  color: #111827;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nb-dropdown-user small {
+  font-size: 12px;
+  color: #6b7280;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nb-dropdown-divider {
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.nb-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 16px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #374151;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.nb-menu-item:hover {
+  background: #f3f4f6;
+}
+
+.nb-menu-item-danger {
+  color: #dc2626;
+}
+
+.nb-menu-item-danger:hover {
+  background: #fef2f2;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .nb-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .nb-links {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .nb-link span {
+    display: none;
+  }
+
+  .nb-user-name {
+    display: none;
+  }
+}

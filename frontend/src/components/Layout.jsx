@@ -5,6 +5,8 @@ export default function Layout({ children }) {
     <>
       <Navbar />
 
+     
+
       <div
         style={{
           padding: "30px",
@@ -14,6 +16,7 @@ export default function Layout({ children }) {
       >
         {children}
       </div>
+
     </>
   );
 }

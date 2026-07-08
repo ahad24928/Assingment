@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import api from "../api/api";
+import "./Register.css";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -20,46 +22,83 @@ export default function Register() {
       });
 
       alert(res.data.message);
-      navigate("/");
+      navigate("/login");
     } catch (err) {
       alert(err.response?.data?.message || "Registration failed");
     }
   };
 
   return (
-    <div style={{ width: "350px", margin: "80px auto" }}>
-      <h2>Register</h2>
+    <div className="register-page">
+      <div className="register-card">
+        <div className="register-logo">
+          ✉
+        </div>
 
-      <form onSubmit={submit}>
-        <input
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          style={{ width: "100%", marginBottom: 10 }}
-        />
+        <h1>Create Account</h1>
+        <p className="subtitle">
+          Register to start sending bulk emails
+        </p>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={{ width: "100%", marginBottom: 10 }}
-        />
+        <form onSubmit={submit}>
+          <div className="form-group">
+            <label>Full Name</label>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{ width: "100%", marginBottom: 10 }}
-        />
+            <div className="input-box">
+              <FaUser className="input-icon" />
 
-        <button type="submit">Create Account</button>
-      </form>
+              <input
+                type="text"
+                placeholder="John Doe"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+          </div>
 
-      <p>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
+          <div className="form-group">
+            <label>Email Address</label>
+
+            <div className="input-box">
+              <FaEnvelope className="input-icon" />
+
+              <input
+                type="email"
+                placeholder="name@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+
+            <div className="input-box">
+              <FaLock className="input-icon" />
+
+              <input
+                type="password"
+                placeholder="Create a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit" className="register-btn">
+            Create Account
+          </button>
+        </form>
+
+        <div className="register-footer">
+          Already have an account?
+          <Link to="/login"> Sign In</Link>
+        </div>
+      </div>
     </div>
   );
 }

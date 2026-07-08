@@ -1,26 +1,14 @@
-import { useEffect, useState } from "react";
-import api from "../api/api";
-
-export default function ScheduledJobs() {
-  const [jobs, setJobs] = useState([]);
-
-  const loadJobs = async () => {
-    const res = await api.get("/scheduled-jobs");
-    setJobs(res.data.data);
-  };
-
-  useEffect(() => {
-    loadJobs();
-  }, []);
-
-  const cancelJob = async (id) => {
-    await api.delete(`/scheduled-jobs/${id}`);
-    loadJobs();
-  };
-
+export default function ScheduledJobs({ jobs = [], loading = false, onRefresh, onCancel }) {
   return (
     <div style={{ marginTop: 30 }}>
-      <h2>Scheduled Jobs</h2>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <h2>Scheduled Jobs</h2>
+        <button type="button" onClick={onRefresh} disabled={loading}>
+          {loading ? "Refreshing..." : "Refresh"}
+        </button>
+      </div>
+
+      {jobs.length === 0 && !loading && <p>No scheduled jobs</p>}
 
       {jobs.map((job) => (
         <div
@@ -37,7 +25,11 @@ export default function ScheduledJobs() {
 
           <p>Contacts: {job.contactCount}</p>
 
-          <button onClick={() => cancelJob(job.id)}>
+          {job.scheduledTime && (
+            <p>Scheduled for: {new Date(job.scheduledTime).toLocaleString()}</p>
+          )}
+
+          <button type="button" onClick={() => onCancel(job.id)}>
             Cancel
           </button>
         </div>

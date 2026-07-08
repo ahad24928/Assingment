@@ -1,0 +1,87 @@
+ .dashboard-welcome{
+        border-radius:18px;
+        overflow:hidden;
+      }
+
+
+      .quote-card{
+        background:linear-gradient(
+          135deg,
+          #eff6ff,
+          #f8fafc
+        );
+
+        border:1px solid #dbeafe;
+      }
+
+
+      .quote-animation{
+        animation:fadeQuote .4s ease;
+      }
+
+
+      @keyframes fadeQuote{
+
+        from{
+          opacity:0;
+          transform:translateY(8px);
+        }
+
+        to{
+          opacity:1;
+          transform:translateY(0);
+        }
+
+      }
+
+
+      .tip-item{
+
+        background:#f8fafc;
+        border:1px solid #e5e7eb;
+        border-radius:10px;
+        padding:12px;
+
+        transition:all .2s ease;
+
+      }
+
+
+      .tip-item:hover{
+
+        background:#f1f5f9;
+        transform:translateY(-2px);
+
+      }
+
+
+      .tip-icon{
+
+        width:28px;
+        height:28px;
+
+        border-radius:50%;
+
+        background:#dbeafe;
+        color:#2563eb;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        font-size:13px;
+        font-weight:700;
+
+        flex-shrink:0;
+      }
+.quote-text{
+    font-size:16px;
+    line-height:1.6;
+    font-style:italic;
+    color:#1e3a8a;
+}
+.rounded-pill{
+    background: #ecfdf5;
+    color: #047857;
+    padding: 1px 12px;
+}
