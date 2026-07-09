@@ -1,0 +1,209 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+*{
+  box-sizing:border-box;
+}
+
+.au-page{
+  max-width:1150px;
+  margin:0 auto;
+  padding:8px 4px 40px;
+  font-family:"Inter",sans-serif;
+  
+}
+
+/* ---------------- Sections ---------------- */
+
+.au-section{
+  margin-bottom:30px;
+  
+}
+
+/* ---------------- Main Card ---------------- */
+
+.au-mission{
+background-color: #0f172a;
+  border:1px solid #e7ecf4;
+  color: #2563eb;
+  border-radius:18px;
+  padding:42px;
+  box-shadow:0 10px 35px rgba(15,23,42,.05);
+  transition:.25s ease;
+}
+
+
+.au-mission:hover{
+  box-shadow:0 18px 45px rgba(15,23,42,.08);
+}
+
+/* ---------------- Badge ---------------- */
+
+.au-mission-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 14px;
+  border-radius:999px;
+  background:rgba(37,99,235,.15);
+  color:#60a5fa;
+  border:1px solid rgba(96,165,250,.3);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  margin-bottom:18px;
+}
+
+/* ---------------- Heading ---------------- */
+
+.au-mission-title{
+  font-size:30px;
+  font-weight:800;
+  color:#cbd5e1;
+  line-height:1.25;
+  margin-bottom:18px;
+  max-width:760px;
+}
+
+/* ---------------- Text ---------------- */
+
+.au-mission-text{
+  color:#f0f0f0;
+  font-size:15px;
+  line-height:1.9;
+  max-width:760px;
+}
+
+.au-mission-text+.au-mission-text{
+  margin-top:16px;
+}
+
+/* ---------------- Highlight ---------------- */
+
+.au-highlight{
+  margin-top:28px;
+  padding:20px 24px;
+  background:#172554;
+  border-left:4px solid #3b82f6;
+  border-radius:12px;
+  color:#dbeafe;
+  line-height:1.9;
+  font-size:14px;
+}
+
+/* ---------------- Feature Grid ---------------- */
+
+.au-feature-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:22px;
+}
+
+.au-feature-card{
+  background:#fff;
+  border:1px solid #e7ecf4;
+  border-radius:18px;
+  padding:28px 24px;
+  transition:.25s ease;
+  box-shadow:0 4px 18px rgba(15,23,42,.04);
+}
+
+.au-feature-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 18px 40px rgba(15,23,42,.08);
+  border-color:#bfdbfe;
+}
+
+.au-feature-icon{
+  width:56px;
+  height:56px;
+  border-radius:14px;
+  background:#eff6ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  margin-bottom:18px;
+}
+
+.au-feature-card h3{
+  font-size:18px;
+  font-weight:700;
+  color:#0f172a;
+  margin-bottom:10px;
+}
+
+.au-feature-card p{
+  font-size:14px;
+  color:#64748b;
+  line-height:1.7;
+}
+
+/* ---------------- Policy ---------------- */
+
+.au-policy-list{
+  margin-top:24px;
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  padding:0;
+}
+
+.au-policy-list li{
+  position:relative;
+  padding-left:30px;
+  color:#dcdfe3;
+  line-height:1.8;
+  font-size:14.5px;
+}
+
+.au-policy-list li::before{
+  content:"✓";
+  position:absolute;
+  left:0;
+  top:0;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:#2563eb;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:700;
+}
+
+/* ---------------- Divider ---------------- */
+
+.au-divider{
+  height:1px;
+  background:#edf2f7;
+  margin:34px 0;
+}
+
+/* ---------------- Responsive ---------------- */
+
+@media(max-width:768px){
+
+.au-page{
+padding:0 0 25px;
+}
+
+.au-mission{
+padding:26px;
+}
+
+.au-mission-title{
+font-size:24px;
+}
+
+.au-feature-grid{
+grid-template-columns:1fr;
+}
+
+.au-feature-card{
+padding:24px;
+}
+
+}

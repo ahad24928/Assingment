@@ -7,6 +7,8 @@ import SMTPConfig from "./pages/SMTPConfig";
 import Reports from "./pages/Reports";
 import NotFound from "./pages/NotFound";
 import Config from "./pages/Config";
+import AboutUs from "./pages/AboutUs";
+
 
 
 
@@ -22,6 +24,8 @@ function App() {
       <Route path="/reports" element={<Reports />} />
 
       <Route path="*" element={<NotFound />} />
+      
+      <Route path="/about" element={<AboutUs />} />
     </Routes>
   );
 }

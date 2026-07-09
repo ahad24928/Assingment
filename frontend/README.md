@@ -76,6 +76,21 @@ The objective was to improve maintainability, component reusability, and user ex
 
 ---
 
+
+## Backend Compatibility Updates
+
+The backend was updated to support a modern React frontend while preserving existing business logic.
+
+### Changes Made
+
+- Removed the legacy static frontend (`public/` folder).
+- Removed Bun static file serving routes.
+- Configured CORS for the React + Vite development server.
+- Preserved all existing Hono API endpoints.
+- Replaced Bun-specific dependencies with Node.js-compatible alternatives where required.
+- Verified backend functionality by testing authentication, SMTP configuration, reports, and email APIs using Postman.
+
+
 ## Project Structure
 
 Frontend

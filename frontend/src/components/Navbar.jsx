@@ -33,13 +33,24 @@ const IconLogout = () => (
     <path d="M21 12H9" />
   </svg>
 );
+const IconMenu = () => (
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <path d="M4 6h16M4 12h16M4 18h16" />
+  </svg>
+);
+const IconClose = () => (
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <path d="M6 6l12 12M18 6L6 18" />
+  </svg>
+);
 
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [user, setUser] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);         // account dropdown
+  const [mobileOpen, setMobileOpen] = useState(false); // mobile drawer
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -52,9 +63,22 @@ export default function Navbar() {
     };
 
     document.addEventListener("click", handleClickOutside);
-
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
+
+  // close everything on route change
+  useEffect(() => {
+    setMobileOpen(false);
+    setOpen(false);
+  }, [location.pathname]);
+
+  // lock page scroll while drawer is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
 
   const loadUser = async () => {
     try {
@@ -67,7 +91,6 @@ export default function Navbar() {
     try {
       await api.post("/auth/logout");
     } catch {}
-
     navigate("/login");
   };
 
@@ -90,10 +113,11 @@ export default function Navbar() {
           <span className="nb-brand-name">Bulk Email Sender</span>
         </div>
 
+        {/* Desktop links */}
         <div className="nb-links">
           <Link className={`nb-link ${isActive("/") ? "nb-link-active" : ""}`} to="/">
             <IconCompose />
-            Compose
+            <span>Compose</span>
           </Link>
 
           <Link
@@ -101,7 +125,7 @@ export default function Navbar() {
             to="/reports"
           >
             <IconChart />
-            Reports
+            <span>Reports</span>
           </Link>
 
           <Link
@@ -109,7 +133,7 @@ export default function Navbar() {
             to="/myconfig"
           >
             <IconSettings />
-            My Configs
+            <span>My Configs</span>
           </Link>
 
           <div className="nb-user-wrap" ref={dropdownRef}>
@@ -150,6 +174,65 @@ export default function Navbar() {
             )}
           </div>
         </div>
+
+        {/* Mobile hamburger */}
+        <button
+          type="button"
+          className="nb-hamburger"
+          aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
+          onClick={(e) => {
+            e.stopPropagation();
+            setMobileOpen((v) => !v);
+          }}
+        >
+          {mobileOpen ? <IconClose /> : <IconMenu />}
+        </button>
+      </div>
+
+      {/* Mobile drawer */}
+      <div
+        className={`nb-backdrop ${mobileOpen ? "nb-backdrop-show" : ""}`}
+        onClick={() => setMobileOpen(false)}
+      />
+      <div className={`nb-drawer ${mobileOpen ? "nb-drawer-open" : ""}`}>
+        <div className="nb-drawer-user">
+          <span className="nb-avatar nb-avatar-lg">{initials}</span>
+          <div className="nb-dropdown-user">
+            <strong>{user?.name || "Account"}</strong>
+            <small>{user?.email}</small>
+          </div>
+        </div>
+
+        <div className="nb-drawer-divider" />
+
+        <Link className={`nb-drawer-link ${isActive("/") ? "nb-drawer-link-active" : ""}`} to="/">
+          <IconCompose />
+          Compose
+        </Link>
+
+        <Link
+          className={`nb-drawer-link ${isActive("/reports") ? "nb-drawer-link-active" : ""}`}
+          to="/reports"
+        >
+          <IconChart />
+          Reports
+        </Link>
+
+        <Link
+          className={`nb-drawer-link ${isActive("/myconfig") ? "nb-drawer-link-active" : ""}`}
+          to="/myconfig"
+        >
+          <IconSettings />
+          My Configs
+        </Link>
+
+        <div className="nb-drawer-divider" />
+
+        <button type="button" className="nb-drawer-link nb-drawer-link-danger" onClick={logout}>
+          <IconLogout />
+          Logout
+        </button>
       </div>
     </nav>
   );

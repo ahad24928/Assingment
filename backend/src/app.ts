@@ -2,7 +2,6 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
-import { serveStatic } from "hono/bun";
 import { mkdir } from "fs/promises";
 import { existsSync } from "fs";
 import { config } from "dotenv";

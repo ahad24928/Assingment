@@ -81,7 +81,7 @@ export default function FileUploads({
   onTestNotification = () => {},
 }) {
   return (
-    <div className="fu-wrap">
+    <div className="fu-wrap" >
       {/* ---------------- File Uploads ---------------- */}
       <div className="fu-card">
         <div className="fu-card-head">
